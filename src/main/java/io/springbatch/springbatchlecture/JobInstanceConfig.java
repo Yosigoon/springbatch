@@ -2,6 +2,7 @@ package io.springbatch.springbatchlecture;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -11,6 +12,8 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,7 +36,18 @@ public class JobInstanceConfig {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("step1 was executed");
+
+                        JobParameters jobParameters = stepContribution.getStepExecution().getJobExecution().getJobParameters();
+                        jobParameters.getString("name");
+                        jobParameters.getLong("sqe");
+                        jobParameters.getDate("date");
+                        jobParameters.getDouble("age");
+
+                        // Map 보단 위에 jobParameters 방식 선호
+                        Map<String, Object> jobParametersMap = chunkContext.getStepContext().getJobParameters();
+
+
+                        System.out.println("step1 has executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
@@ -46,7 +60,7 @@ public class JobInstanceConfig {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("step2 was executed");
+                        System.out.println("step2 has executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
