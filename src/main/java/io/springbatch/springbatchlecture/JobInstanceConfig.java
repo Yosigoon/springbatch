@@ -36,17 +36,6 @@ public class JobInstanceConfig {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
-
-                        JobParameters jobParameters = stepContribution.getStepExecution().getJobExecution().getJobParameters();
-                        jobParameters.getString("name");
-                        jobParameters.getLong("sqe");
-                        jobParameters.getDate("date");
-                        jobParameters.getDouble("age");
-
-                        // Map 보단 위에 jobParameters 방식 선호
-                        Map<String, Object> jobParametersMap = chunkContext.getStepContext().getJobParameters();
-
-
                         System.out.println("step1 has executed");
                         return RepeatStatus.FINISHED;
                     }
