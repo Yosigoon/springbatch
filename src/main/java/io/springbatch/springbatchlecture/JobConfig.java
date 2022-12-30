@@ -19,7 +19,7 @@ public class JobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+    /*@Bean
     public Job job(){
         return jobBuilderFactory.get("job")
                 .start(step1())
@@ -52,6 +52,6 @@ public class JobConfig {
                     }
                 })
                 .build();
-    }
+    }*/
 
 }
