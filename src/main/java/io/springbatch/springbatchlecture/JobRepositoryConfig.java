@@ -2,6 +2,7 @@ package io.springbatch.springbatchlecture;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -14,16 +15,18 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class JobConfig {
+public class JobRepositoryConfig {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
+    private final JobExecutionListener jobExecutionListener;
 
-    /*@Bean
-    public Job job(){
-        return jobBuilderFactory.get("job")
+    @Bean
+    public Job batchJob(){
+        return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
+                .listener(jobExecutionListener)
                 .build();
     }
 
@@ -47,11 +50,10 @@ public class JobConfig {
                     @Override
                     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
                         System.out.println("step2 has executed");
-                        //throw new RuntimeException("step2 has failed");
                         return RepeatStatus.FINISHED;
                     }
                 })
                 .build();
-    }*/
+    }
 
 }
